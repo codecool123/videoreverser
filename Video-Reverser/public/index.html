@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link type="x-icon" rel="icon" href="logo.ico" />
+        <title>Pro Video Reverser</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <!-- Loading Spinner -->
+        <div id="loading-spinner" class="loading-spinner">
+            <div class="spinner-circle"></div>
+            <p>Loading Pro Video Reverser...</p>
+        </div>
+
+        <div class="container">
+            <img
+                src="logo.ico"
+                draggable="false"
+                alt="Pro Video Reverser Logo"
+            />
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round">
+                        <span class="material-symbols-outlined light-mode-icon"
+                            >light_mode</span
+                        >
+                        <span class="material-symbols-outlined dark-mode-icon"
+                            >dark_mode</span
+                        >
+                    </div>
+                </label>
+            </div>
+
+            <h1>Pro Video Reverser</h1>
+
+            <div class="mode-selection">
+                <button
+                    type="button"
+                    class="btn active-mode-btn"
+                    id="show-upload-mode-btn"
+                >
+                    <span class="material-symbols-outlined">folder_open</span>
+                    Upload Video File
+                </button>
+                <button type="button" class="btn" id="show-record-mode-btn">
+                    <span class="material-symbols-outlined">videocam</span>
+                    Record New Video
+                </button>
+            </div>
+
+            <div id="upload-section" class="input-mode-content active">
+                <form id="upload-form" enctype="multipart/form-data">
+                    <div class="upload-area" id="drop-area">
+                        <span class="material-symbols-outlined icon-general"
+                            >upload_file</span
+                        >
+                        <p style="font-size: 1.2em; font-weight: 500">
+                            Drag & Drop Your Video Here
+                        </p>
+                        <p>or</p>
+                        <input
+                            type="file"
+                            name="video"
+                            id="video-input"
+                            accept="video/*"
+                            required
+                        />
+                        <button type="button" class="btn" id="browse-btn">
+                            <span class="material-symbols-outlined"
+                                >description</span
+                            >
+                            Choose File
+                        </button>
+                        <p
+                            class="selected-file-name"
+                            id="selected-file-name"
+                        ></p>
+                    </div>
+                    <div
+                        class="progress-container"
+                        id="upload-progress-container"
+                    >
+                        <div
+                            class="progress-bar"
+                            id="upload-progress-bar"
+                        ></div>
+                    </div>
+                    <p class="message" id="upload-status-message"></p>
+                </form>
+            </div>
+
+            <div id="record-section" class="input-mode-content">
+                <div class="record-area">
+                    <video
+                        id="live-camera-feed"
+                        autoplay
+                        muted
+                        playsinline
+                    ></video>
+                    <p id="recording-status" class="message">
+                        Click "Start Recording" to begin
+                    </p>
+                </div>
+                <div class="recording-controls">
+                    <button class="btn" id="start-recording-btn">
+                        <span class="material-symbols-outlined"
+                            >fiber_manual_record</span
+                        >
+                        Start Recording
+                    </button>
+                    <button
+                        class="btn btn-secondary"
+                        id="stop-recording-btn"
+                        style="display: none"
+                    >
+                        <span class="material-symbols-outlined"
+                            >stop_circle</span
+                        >
+                        Stop Recording
+                    </button>
+                    <button
+                        class="btn btn-primary"
+                        id="upload-recorded-btn"
+                        style="display: none"
+                    >
+                        <span class="material-symbols-outlined">upload</span>
+                        Upload Recorded Video
+                    </button>
+                    <button
+                        class="btn btn-secondary"
+                        id="retake-recorded-btn"
+                        style="display: none"
+                    >
+                        <span class="material-symbols-outlined">refresh</span>
+                        Retake
+                    </button>
+                </div>
+                <div class="progress-container" id="record-progress-container">
+                    <div class="progress-bar" id="record-progress-bar"></div>
+                </div>
+                <p class="message" id="record-upload-status-message"></p>
+                <p class="message-subtext" id="upload-processing-subtext"></p>
+                <p class="message-subtext" id="record-processing-subtext"></p>
+            </div>
+
+            <div id="result-section">
+                <h2>Compare & Download</h2>
+                <div class="video-comparison">
+                    <div class="video-wrapper">
+                        <p>Original Video</p>
+                        <video
+                            id="original-video-preview"
+                            autoplay
+                            loop
+                            muted
+                        ></video>
+                        <button
+                            class="mute-btn"
+                            data-video-id="original-video-preview"
+                            aria-label="Mute/Unmute Original Video"
+                        >
+                            <span class="material-symbols-outlined"
+                                >volume_off</span
+                            >
+                        </button>
+                        <button
+                            class="fullscreen-btn"
+                            data-video-id="original-video-preview"
+                            aria-label="Toggle Fullscreen"
+                        >
+                            <span class="material-symbols-outlined"
+                                >fullscreen</span
+                            >
+                        </button>
+                        <div class="video-time" id="original-video-time">
+                            0:00 / 0:00
+                        </div>
+                    </div>
+                    <div class="video-wrapper">
+                        <p>Reversed Video</p>
+                        <video
+                            id="reversed-video-preview"
+                            autoplay
+                            loop
+                            muted
+                        ></video>
+                        <button
+                            class="mute-btn"
+                            data-video-id="reversed-video-preview"
+                            aria-label="Mute/Unmute Reversed Video"
+                        >
+                            <span class="material-symbols-outlined"
+                                >volume_off</span
+                            >
+                        </button>
+                        <button
+                            class="fullscreen-btn"
+                            data-video-id="reversed-video-preview"
+                            aria-label="Toggle Fullscreen"
+                        >
+                            <span class="material-symbols-outlined"
+                                >fullscreen</span
+                            >
+                        </button>
+                        <div class="video-time" id="reversed-video-time">
+                            0:00 / 0:00
+                        </div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <a id="download-link" href="#" download>
+                        <button class="btn btn-primary" id="download-btn">
+                            <span class="material-symbols-outlined"
+                                >download</span
+                            >
+                            Download Reversed Video
+                        </button>
+                    </a>
+                    <button class="btn btn-secondary" id="upload-another-btn">
+                        <span class="material-symbols-outlined">upload</span>
+                        Upload Another Video
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>
